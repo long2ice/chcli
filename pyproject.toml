@@ -9,6 +9,7 @@ license = "Apache-2.0"
 python = "^3.8"
 prompt_toolkit = "*"
 asynch = "*"
+rich = "*"
 
 [tool.poetry.dev-dependencies]
 
