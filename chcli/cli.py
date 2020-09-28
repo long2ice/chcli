@@ -5,11 +5,9 @@ from functools import wraps
 import click
 from asynch.errors import ServerException
 
-from chcli import console
+from chcli import __version__, console
 from chcli.common import init
 from chcli.connection import Connection
-
-from . import __version__
 
 
 def coro(f):

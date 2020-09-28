@@ -9,6 +9,7 @@ class Connection:
     user = None
     password = None
     database = None
+    prompt_session = None
 
     @classmethod
     async def connect_server(
@@ -41,4 +42,21 @@ class Connection:
         conn = await cls.get_conn()
         async with conn.cursor(cursor=DictCursor) as cursor:
             await cursor.execute(query)
-            return cursor.fetchall()
+            ret = cursor.fetchall()
+            db = cls._is_use_database(query)
+            if db:
+                cls.database = db
+                cls.refresh_prompt_message()
+            if ret:
+                return ret
+
+    @classmethod
+    def _is_use_database(cls, query: str):
+        if query.startswith(("use", "USE")):
+            return query.split(" ")[1].strip()
+
+    @classmethod
+    def refresh_prompt_message(cls):
+        cls.prompt_session.message = (
+            f"\n{Connection.user}@{Connection.host}:{Connection.port}:({Connection.database})> "
+        )

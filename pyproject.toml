@@ -11,6 +11,7 @@ prompt_toolkit = "*"
 asynch = "*"
 rich = "*"
 click = "*"
+sqlparse = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"
