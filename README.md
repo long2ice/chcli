@@ -1,5 +1,10 @@
 # chcli
 
+![pypi](https://img.shields.io/pypi/v/chcli.svg?style=flat)
+![license](https://img.shields.io/github/license/long2ice/chcli)
+![workflows](https://github.com/long2ice/chcli/workflows/pypi/badge.svg)
+![workflows](https://github.com/long2ice/chcli/workflows/ci/badge.svg)
+
 A Terminal Client for ClickHouse with AutoCompletion and Syntax Highlighting.
 
 This project is inspired by [mycli](https://github.com/dbcli/mycli).

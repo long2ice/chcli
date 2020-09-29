@@ -4,6 +4,8 @@ import pytest
 
 from chcli.connection import Connection
 
+DATABASE = "chcli"
+
 
 @pytest.yield_fixture(scope="session")
 def event_loop():
@@ -21,9 +23,9 @@ def event_loop():
 @pytest.fixture(scope="session", autouse=True)
 async def initialize_tests():
     await Connection.connect_server()
-    await Connection.execute("create database if not exists chcli")
+    await Connection.execute(f"create database if not exists {DATABASE}")
     await Connection.execute(
-        """CREATE TABLE if not exists chcli.test
+        f"""CREATE TABLE if not exists {DATABASE}.test
     (
         `id`       Int32,
         `decimal`  Decimal(10, 2),

@@ -34,6 +34,6 @@ async def get_columns(database: str, table: Optional[str] = None) -> List[str]:
 from system.columns
 where database = '{database}'"""
     if table:
-        sql += f" and table={table}"
+        sql += f" and table='{table}'"
     ret = await Connection.execute(sql)
     return list(map(lambda x: x.get("name"), ret))
