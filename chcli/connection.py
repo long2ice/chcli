@@ -57,6 +57,11 @@ class Connection:
 
     @classmethod
     def refresh_prompt_message(cls):
-        cls.prompt_session.message = (
-            f"\n{Connection.user}@{Connection.host}:{Connection.port}:({Connection.database})> "
-        )
+        if cls.database == "default":
+            cls.prompt_session.message = (
+                f"\n{Connection.user}@{Connection.host}:{Connection.port}:({Connection.database})> "
+            )
+        else:
+            cls.prompt_session.message = (
+                f"\n{Connection.user}@{Connection.host}:{Connection.port}:{Connection.database}> "
+            )

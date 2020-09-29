@@ -18,14 +18,16 @@ async def get_tables(database: str) -> List[str]:
     ret = await Connection.execute(sql)
     if ret:
         return list(map(lambda x: x.get("name"), ret))
-    return ret
+    return ret or []
 
 
 @alru_cache()
 async def get_databases() -> List[str]:
     sql = "show databases"
     ret = await Connection.execute(sql)
-    return list(map(lambda x: x.get("name"), ret))
+    if ret:
+        return list(map(lambda x: x.get("name"), ret))
+    return ret or []
 
 
 @alru_cache()
@@ -36,4 +38,6 @@ where database = '{database}'"""
     if table:
         sql += f" and table='{table}'"
     ret = await Connection.execute(sql)
-    return list(map(lambda x: x.get("name"), ret))
+    if ret:
+        return list(map(lambda x: x.get("name"), ret))
+    return ret or []

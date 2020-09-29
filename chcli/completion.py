@@ -46,6 +46,7 @@ class SqlCompleter(Completer):
     _database = "database"
     _table = "table"
     _column = "column"
+    _functions = []
 
     def set_words(self, words: List[str]):
         self._words = words
@@ -89,15 +90,15 @@ class SqlCompleter(Completer):
         if type_ == self._database:
             databases = await get_databases()
             self._words = databases
-            return True
+            return databases
         elif type_ == self._table:
             tables = await get_tables(Connection.database)
             self._words = tables
-            return True
+            return tables
         elif type_ == self._column:
             columns = await get_columns(Connection.database)
             self._words = columns
-            return True
+            return columns
         return False
 
     async def get_completions_async(

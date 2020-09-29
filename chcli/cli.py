@@ -30,7 +30,7 @@ def coro(f):
     "-u", "--user", default="default", show_default=True, help="ClickHouse server user.",
 )
 @click.password_option(
-    confirmation_prompt=False, show_default=True, default="", help="ClickHouse server password.",
+    confirmation_prompt=False, show_default=False, default="", help="ClickHouse server password.",
 )
 @coro
 async def cli(host: str, port: int, user: str, password: str):
