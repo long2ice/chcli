@@ -20,7 +20,7 @@ def event_loop():
 
 @pytest.fixture(scope="session", autouse=True)
 async def initialize_tests():
-    await Connection.connect_server(database="chcli")
+    await Connection.connect_server()
     await Connection.execute("create database if not exists chcli")
     await Connection.execute(
         """CREATE TABLE if not exists chcli.test

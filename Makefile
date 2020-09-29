@@ -29,7 +29,7 @@ check: deps
 	bandit -x tests -r $(checkfiles)
 
 test: deps
-	$(py_warn) TEST_DB=sqlite://:memory: py.test
+	$(py_warn) pytest
 
 
 build: deps

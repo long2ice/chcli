@@ -13,14 +13,16 @@ async def get_server_info():
 
 
 @alru_cache()
-async def show_tables(database: str) -> List[str]:
-    sql = "show tables"
+async def get_tables(database: str) -> List[str]:
+    sql = f"show tables from {database}"
     ret = await Connection.execute(sql)
-    return list(map(lambda x: x.get("name"), ret))
+    if ret:
+        return list(map(lambda x: x.get("name"), ret))
+    return ret
 
 
 @alru_cache()
-async def show_databases() -> List[str]:
+async def get_databases() -> List[str]:
     sql = "show databases"
     ret = await Connection.execute(sql)
     return list(map(lambda x: x.get("name"), ret))

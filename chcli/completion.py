@@ -10,7 +10,7 @@ from prompt_toolkit.document import Document
 
 from chcli import constants
 from chcli.connection import Connection
-from chcli.executer import get_columns, show_databases, show_tables
+from chcli.executer import get_columns, get_databases, get_tables
 from chcli.grammar.ClickHouseLexer import ClickHouseLexer
 from chcli.grammar.ClickHouseParser import ClickHouseParser
 
@@ -87,11 +87,11 @@ class SqlCompleter(Completer):
         last_word = self._get_last_word(text).upper()
         type_ = self._get_suggest_type(last_word)
         if type_ == self._database:
-            databases = await show_databases()
+            databases = await get_databases()
             self._words = databases
             return True
         elif type_ == self._table:
-            tables = await show_tables(Connection.database)
+            tables = await get_tables(Connection.database)
             self._words = tables
             return True
         elif type_ == self._column:
