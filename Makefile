@@ -33,6 +33,7 @@ test: deps
 
 
 build: deps
+	@rm -rf ./dist
 	@poetry build
 
 ci: check test

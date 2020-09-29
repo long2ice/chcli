@@ -4,6 +4,15 @@ version = "0.1.0"
 description = "A Terminal Client for ClickHouse with AutoCompletion and Syntax Highlighting."
 authors = ["long2ice <long2ice@gmail.com>"]
 license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/long2ice/chcli"
+repository = "https://github.com/long2ice/chcli.git"
+documentation = "https://github.com/long2ice/chcli"
+keywords = ["migrate", "Tortoise-ORM", "mysql"]
+packages = [
+    { include = "chcli" }
+]
+include = ["CHANGELOG.md", "LICENSE", "README.md"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -12,6 +21,8 @@ asynch = "*"
 rich = "*"
 click = "*"
 sqlparse = "*"
+antlr4-python3-runtime = "*"
+async_lru = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"
@@ -26,3 +37,6 @@ pytest-mock = "*"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.poetry.scripts]
+chcli = "chcli.cli:main"

@@ -12,7 +12,7 @@ from rich.table import Table
 from chcli.connection import Connection
 
 from . import __version__, constants
-from .completer import SqlCompleter
+from .completion import SqlCompleter
 from .key_bindings import kb
 
 console = Console(highlight=False)
@@ -62,20 +62,19 @@ async def run():
             text = await session.prompt_async()
             text = text.strip()
             if text != constants.EXIT:
-                try:
-                    start = time.time()
-                    ret = await Connection.execute(text)
-                    if ret:
-                        pretty_table(ret)
-                    end = time.time()
-                    ms = int((end - start) * 1000)
-                    console.print(f"\ncomplete in {ms} ms")
-                except ServerException as e:
-                    console.print(e, style="bold red")
+                start = time.time()
+                ret = await Connection.execute(text)
+                if ret:
+                    pretty_table(ret)
+                end = time.time()
+                ms = int((end - start) * 1000)
+                console.print(f"\ncomplete in {ms} ms")
         except KeyboardInterrupt:
             continue
         except EOFError:
             break
+        except ServerException as e:
+            console.print(e, style="bold red")
     console.print("GoodBye!")
 
 

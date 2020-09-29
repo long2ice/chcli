@@ -1,7 +1,7 @@
 from chcli import console
 from chcli.connection import Connection
 from chcli.console import session
-from chcli.execute import get_server_info
+from chcli.executer import get_server_info
 
 
 async def init():

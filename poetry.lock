@@ -1,4 +1,12 @@
 [[package]]
+category = "main"
+description = "ANTLR 4.8 runtime for Python 3.7"
+name = "antlr4-python3-runtime"
+optional = false
+python-versions = "*"
+version = "4.8"
+
+[[package]]
 category = "dev"
 description = "apipkg: namespace control and lazy-import mechanism"
 name = "apipkg"
@@ -13,6 +21,14 @@ name = "appdirs"
 optional = false
 python-versions = "*"
 version = "1.4.4"
+
+[[package]]
+category = "main"
+description = "Simple lru_cache for asyncio"
+name = "async-lru"
+optional = false
+python-versions = "*"
+version = "1.0.2"
 
 [[package]]
 category = "main"
@@ -528,11 +544,14 @@ python-versions = "*"
 version = "1.4.5.1"
 
 [metadata]
-content-hash = "60fe396834b4f4a37a8093abdd893ad305da4e89a57ff788c007f3b72bd7e17e"
+content-hash = "2134eab52bf9837c1607ffd85fc65ab8678fb9056e89986c7428b33d76a73fcd"
 lock-version = "1.0"
 python-versions = "^3.8"
 
 [metadata.files]
+antlr4-python3-runtime = [
+    {file = "antlr4-python3-runtime-4.8.tar.gz", hash = "sha256:15793f5d0512a372b4e7d2284058ad32ce7dd27126b105fb0b2245130445db33"},
+]
 apipkg = [
     {file = "apipkg-1.5-py2.py3-none-any.whl", hash = "sha256:58587dd4dc3daefad0487f6d9ae32b4542b185e1c36db6993290e7c41ca2b47c"},
     {file = "apipkg-1.5.tar.gz", hash = "sha256:37228cda29411948b422fae072f57e31d3396d2ee1c9783775980ee9c9990af6"},
@@ -540,6 +559,9 @@ apipkg = [
 appdirs = [
     {file = "appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"},
     {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
+]
+async-lru = [
+    {file = "async_lru-1.0.2.tar.gz", hash = "sha256:baa898027619f5cc31b7966f96f00e4fc0df43ba206a8940a5d1af5336a477cb"},
 ]
 asynch = [
     {file = "asynch-0.1.2-py3-none-any.whl", hash = "sha256:60dfc00ce8ef0434ed9987e1b44ed9f480541bb13ae3723a8354aa97d07b6244"},
