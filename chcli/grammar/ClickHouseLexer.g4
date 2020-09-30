@@ -182,6 +182,10 @@ T_INTERVAL_SECOND : 'IntervalSecond' ;
 T_AGGREGATE_FUNCTION : 'AggregateFunction' ;
 // lambda type has unknown name.
 
+// function
+F_COUNT : 'count';
+F_SUM : 'sum';
+
 IDENTIFIER
   : [a-zA-Z_] [a-zA-Z_0-9]*
   ;

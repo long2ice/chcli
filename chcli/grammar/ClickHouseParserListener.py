@@ -871,6 +871,22 @@ class ClickHouseParserListener(ParseTreeListener):
     def exitFunction_name(self, ctx: ClickHouseParser.Function_nameContext):
         pass
 
+    # Enter a parse tree produced by ClickHouseParser#functionname.
+    def enterFunctionname(self, ctx: ClickHouseParser.FunctionnameContext):
+        pass
+
+    # Exit a parse tree produced by ClickHouseParser#functionname.
+    def exitFunctionname(self, ctx: ClickHouseParser.FunctionnameContext):
+        pass
+
+    # Enter a parse tree produced by ClickHouseParser#variable.
+    def enterVariable(self, ctx: ClickHouseParser.VariableContext):
+        pass
+
+    # Exit a parse tree produced by ClickHouseParser#variable.
+    def exitVariable(self, ctx: ClickHouseParser.VariableContext):
+        pass
+
     # Enter a parse tree produced by ClickHouseParser#identifier.
     def enterIdentifier(self, ctx: ClickHouseParser.IdentifierContext):
         pass

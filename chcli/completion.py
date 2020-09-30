@@ -35,9 +35,9 @@ class SyntaxErrorListener(ErrorListener):
         for i in tokens.intervals:
             for j in i:
                 token = tokens.elementName(recognizer.literalNames, recognizer.symbolicNames, j)
-                if token != "UNEXPECTED_CHAR":
-                    words.append(token.replace("K_", "").replace("'", ""))
-        self.completer.set_words(words)
+                if token not in ("UNEXPECTED_CHAR", "IDENTIFIER"):
+                    words.append(token)
+        self.completer.append_words(words)
 
 
 class SqlCompleter(Completer):
@@ -50,6 +50,9 @@ class SqlCompleter(Completer):
 
     def set_words(self, words: List[str]):
         self._words = words
+
+    def append_words(self, words: List[str]):
+        self._words.extend(words)
 
     def parse(self, text: str):
         lexer = ClickHouseLexer(InputStream(text))
@@ -90,36 +93,38 @@ class SqlCompleter(Completer):
         if type_ == self._database:
             databases = await get_databases()
             self._words = databases
-            return databases
         elif type_ == self._table:
             tables = await get_tables(Connection.database)
             self._words = tables
-            return tables
         elif type_ == self._column:
             columns = await get_columns(Connection.database)
             self._words = columns
-            return columns
-        return False
+        else:
+            self._words = []
 
     async def get_completions_async(
         self, document: Document, complete_event: CompleteEvent
     ) -> AsyncGenerator[Completion, None]:
         word_before_cursor = document.get_word_before_cursor()
         text = document.text
-        if not await self.suggest_by_last_word(text):
-            self.parse(text)
+        await self.suggest_by_last_word(text)
+        self.parse(text)
 
         if not text.isupper():
             self._upper_mode = False
         else:
             self._upper_mode = True
-        for word in self._words:
+        for word in sorted(set(self._words)):
             if word_before_cursor.upper() in word or word_before_cursor.lower() in word:
-                if self._upper_mode:
-                    w = word.upper()
+                if "'" in word:
+                    yield Completion(word.replace("'", ""), start_position=-len(word_before_cursor))
                 else:
-                    w = word.lower()
-                yield Completion(w, start_position=-len(word_before_cursor))
+                    w = word.replace("K_", "")
+                    if self._upper_mode:
+                        w = w.upper()
+                    else:
+                        w = w.lower()
+                    yield Completion(w, start_position=-len(word_before_cursor))
         else:
             if document.text in constants.EXIT:
                 yield Completion(constants.EXIT, start_position=-len(word_before_cursor))

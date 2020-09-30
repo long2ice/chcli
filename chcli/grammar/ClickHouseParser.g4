@@ -4,13 +4,6 @@ options {
 	tokenVocab=ClickHouseLexer;
 }
 
-// эта грамматика написана по сорсам парсеров, имена правил примерно соответствуют парсерам в cpp.
-// известные расхождения
-// 1. скобки не обязательно сразу идут после имени функции.
-// 2. многословные токены поделены на самостоятельные слова
-// 3. для INSERT запроса не написана часть парсинга значений.
-// 4. правило для expr переписано чтобы понизить глубину AST и сразу выходить на уровень expr - al
-
 parse
  : ( query | err ) EOF
  ;
@@ -90,7 +83,7 @@ select_join_step
  ;
 
 select_join_right_part
- : identifier
+ : variable
  | subquery
  ;
 
@@ -127,7 +120,7 @@ settings_step
  ;
 
 select_format_step
- : K_FORMAT identifier
+ : K_FORMAT variable
  ;
 
 insert_query
@@ -254,10 +247,7 @@ table_properties_query
  ;
 
 show_tables_query
- : K_SHOW ( K_DATABASES
-            | K_TABLES ( K_FROM database_name ) ? ( K_NOT? K_LIKE STRING_LITERAL ) ? )
-             query_outfile_step?
-            ( K_FORMAT format_name ) ?
+ : K_SHOW ( K_DATABASES | K_TABLES ( K_FROM database_name ) ? ( K_NOT? K_LIKE STRING_LITERAL ) ? ) query_outfile_step? ( K_FORMAT format_name ) ?
  ;
 
 show_processlist_query
@@ -275,23 +265,23 @@ full_table_name
  ;
 
 partition_name
- : identifier | STRING_LITERAL
+ : variable
  ;
 
 cluster_name
- : identifier | STRING_LITERAL
+ : variable
  ;
 
 database_name
- :  identifier
+ :  variable
  ;
 
 table_name
- :  identifier
+ :  variable
  ;
 
 format_name
- :  identifier
+ :  variable
  ;
 
 query_outfile_step
@@ -353,7 +343,7 @@ column_declaration
  ;
 
 column_name
- : identifier
+ : variable
  ;
 
 column_type
@@ -381,11 +371,11 @@ alias
  ;
 
 alias_name
- : identifier
+ : variable
  ;
 
 table_function
- :   function
+ : function
  ;
 
 
@@ -463,12 +453,20 @@ function_arguments
 
 function_name
  : identifier
+ | functionname
+ ;
+
+functionname
+ : F_COUNT
+ | F_SUM
+ ;
+
+variable
+ : IDENTIFIER
  ;
 
 identifier
  : QUOTED_LITERAL
- | IDENTIFIER
-    // в данном случае мы разрешаем ключевым словам выступать в качестве имен колонок или функций.
  | simple_type
  | keyword
  ;
@@ -574,8 +572,8 @@ keyword
  ;
 
 compound_identifier
-: identifier DOT identifier
-| identifier
+: variable DOT variable
+| variable
 ;
 
 
@@ -587,7 +585,4 @@ literal
 
 err
  : UNEXPECTED_CHAR
-   {
-     throw new RuntimeException("UNEXPECTED_CHAR=" + $UNEXPECTED_CHAR.text);
-   }
  ;
