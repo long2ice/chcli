@@ -5,6 +5,8 @@
 ![workflows](https://github.com/long2ice/chcli/workflows/pypi/badge.svg)
 ![workflows](https://github.com/long2ice/chcli/workflows/ci/badge.svg)
 
+![screenshot](https://raw.githubusercontent.com/long2ice/chcli/dev/images/screenshot.png)
+
 A Terminal Client for ClickHouse with AutoCompletion and Syntax Highlighting.
 
 This project is inspired by [mycli](https://github.com/dbcli/mycli).
